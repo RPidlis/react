@@ -16,7 +16,7 @@ export default class Users extends React.Component {
                     this.props.users.map(u => <div key={u.id}>
                     <span>
                         <div>
-                            <img src='../../assets/images/ava.jpg' alt='' className={s.usersPhoto}/>
+                            <img src='../../assets/images/ava.png' alt='' className={s.usersPhoto}/>
                         </div>
                         <div>
                             {u.followed
