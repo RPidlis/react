@@ -27,19 +27,18 @@ const Users = (props) => {
                 props.users.map(u => <div key={u.id}>
                     <span>
                         <div>
-                            <NavLink to={'/profile' + u.id}>
+                            <NavLink to={'/profile/' + u.id}>
                                 <img src={u.photos.small !== null ? u.photos.small : userAvatar} alt=''
-                                 className={s.usersPhoto}/>
+                                     className={s.usersPhoto}/>
                             </NavLink>
                         </div>
                         <div>
                             {u.followed
-                                ? <button onClick={() => {
-                                    props.unfollow(u.id)
-                                }}>Unfollow</button>
-                                : <button onClick={() => {
-                                    props.follow(u.id)
-                                }}>Follow</button>
+                                ? <button disabled={props.followingInProgress.some(id => id === u.id)}
+                                          onClick={() => {props.unfollow(u.id)}}>Unfollow</button>
+
+                                : <button disabled={props.followingInProgress.some(id => id === u.id)}
+                                          onClick={() => {props.follow(u.id)}}>Follow</button>
                             }
                         </div>
                     </span>
@@ -56,7 +55,7 @@ const Users = (props) => {
                 </div>)
             }
         </div>
-    )
-}
+    );
+};
 
 export default Users;
