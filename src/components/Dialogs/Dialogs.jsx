@@ -2,11 +2,13 @@ import React from "react";
 import s from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Massage from "./Massage/Massage";
+import {Field, reduxForm} from 'redux-form';
+import {TextArea} from "../common/FormsControls/FormsControls";
+import {maxLengthCreator, required} from "../../utils/validators/validators";
+
 // import { Redirect } from "react-router-dom";
 
 const Dialogs = (props) => {
-  let newMassageText = props.massagesPage.newMassageText;
-
   let dialogsElements = props.massagesPage.dialogs.map((d) => (
     <DialogItem name={d.name} id={d.id} key={d.id} />
   ));
@@ -14,32 +16,36 @@ const Dialogs = (props) => {
   let massagesElements = props.massagesPage.massages.map((m) => (
     <Massage massage={m.massage} key={m.id} />
   ));
-  let newMassageElement = React.createRef();
-  let addMassage = () => props.addNewMassage();
 
-  let onChangeMassageText = () => {
-    let massage = newMassageElement.current.value;
-    props.updateMassageText(massage);
+  let addNewMassage = (formData) => {
+    props.addNewMassage(formData.newMassageText)
   };
 
- // if(!props.isAuth) return <Redirect to="/login" />;
   return (
     <div className={s.dialogs}>
       <div className={s.dialogsItems}>{dialogsElements}</div>
       <div className={s.massages}>
         {massagesElements}
-        <div>
-          <textarea
-            value={newMassageText}
-            onChange={onChangeMassageText}
-            ref={newMassageElement}
-            placeholder="Enter new massage"
-          />
-          <button onClick={addMassage}>Add Massage</button>
-        </div>
+        <AddMassageFormRedux onSubmit={addNewMassage} />
       </div>
     </div>
   );
 };
+const maxLength30 = maxLengthCreator(30)
+const AddMassageForm = (props) => {
+  return(
+      <form onSubmit={props.handleSubmit}>
+          <Field
+              component={TextArea}
+              name={'newMassageText'}
+              placeholder={"Enter new massage"}
+              validate={[required, maxLength30]}
+          />
+        <button>Send</button>
+      </form>
+  )
+}
+
+const AddMassageFormRedux = reduxForm({form: 'dialogAddMassageForm'})(AddMassageForm)
 
 export default Dialogs;

@@ -1,5 +1,4 @@
 
-const UPDATE_MASSAGE_TEXT = "UPDATE-MASSAGE-TEXT";
 const ADD_MASSAGE = "ADD-MASSAGE";
 
 let initialState = {
@@ -19,7 +18,6 @@ let initialState = {
         { id: "5", massage: "YO" },
         { id: "6", massage: "ot" },
     ],
-    newMassageText: ' ',
 }
 
 export const dialogsReducer = (state = initialState, action) => {
@@ -28,16 +26,8 @@ export const dialogsReducer = (state = initialState, action) => {
         case ADD_MASSAGE: {
             stateCopy = {
                 ...state,
-                massages: [...state.massages, {id: "6", massage: state.newMassageText}],
-                newMassageText: ''
+                massages: [...state.massages, {id: "6", massage: action.newMassageText}]
             }
-            return stateCopy;
-        }
-        case UPDATE_MASSAGE_TEXT: {
-             stateCopy = {
-                 ...state,
-                 newMassageText: action.newText
-             };
             return stateCopy;
         }
         default:
@@ -47,11 +37,7 @@ export const dialogsReducer = (state = initialState, action) => {
 
 };
 
-export const addNewMassage = () => ({ type: ADD_MASSAGE });
+export const addNewMassage = (newMassageText) => ({ type: ADD_MASSAGE, newMassageText});
 
-export const updateMassageText = (text) => ({
-  type: UPDATE_MASSAGE_TEXT,
-  newText: text,
-});
 
 export default dialogsReducer;
