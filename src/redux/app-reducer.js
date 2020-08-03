@@ -7,14 +7,14 @@ const SET_INITIALIZED = "SET_INITIALIZED";
 
 let initialState;
 initialState = {
-    initialaized: false
+    initialized: false
 };
 const appReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_INITIALIZED: {
             return {
                 ...state,
-                initialaized: true
+                initialized: true
             }
         }
 
@@ -26,7 +26,7 @@ const appReducer = (state = initialState, action) => {
 }
 
 export const initializedSuccess = () => ({type: SET_INITIALIZED});
-export const initialize = () => (dispatch) => {
+export const initializeApp = () => (dispatch) => {
     let promise = dispatch(getAuthUserData());
 
     Promise.all([promise])
