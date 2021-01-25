@@ -4,8 +4,7 @@ import { stopSubmit } from "redux-form";
 const SET_USER_DATA = "SET_USER_DATA";
 const UNFOLLOW = "UNFOLLOW";
 
-let initialState;
-initialState = {
+const initialState = {
   userId: null,
   email: null,
   login: null,
